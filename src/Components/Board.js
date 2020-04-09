@@ -14,7 +14,7 @@ class Board extends React.Component {
   async componentDidMount() {
     await this.setUpTiles();
     console.log(this.state.tiles);
-
+    
   }
 
   setUpTiles() {
@@ -30,9 +30,9 @@ class Board extends React.Component {
       tileArray.push(tileObject);
 
     };
-    // let blankType = tileArray[0].type
-    // blankType = 'blank';
-    // console.log(blankType);
+    let blankType = tileArray[1].type
+    blankType = 'blank';
+    console.log(blankType);
 
     this.setState({ tiles: tileArray });
 
@@ -42,31 +42,32 @@ class Board extends React.Component {
   handleClick(e) {
     // console.log('clicked', e.target)
     let clickedTile = this.state.tiles[e.target.id].location;
-    // let clickedType = this.state.tiles[e.target.id].type;
-    // let blankType = 'blank';
+    let clickedType = this.state.tiles[e.target.id].type;
     let blankTile = this.state.tiles[1].location;
-    // console.log(clickedTile);
-    // console.log(clickedType);
-    // console.log(newType);
-    // console.log(blankTile);
+    let blankType = this.state.tiles[1].type;
+    blankType = 'blank';
 
     // evaluate if clickedTile is eligible to swap with blankTile
     let eligibleTile = (blankTile + 1) || (blankTile - 1)
     if (clickedTile === eligibleTile) {
       console.log('switch');
-      let tempTile = this.state.tiles[clickedTile].location;
-      // let tempType = this.state.tiles[clickedTile].type;
-      let newTile = this.state.tiles[blankTile].location;
-      // let oldBlankType = this.state.tiles[blankTile].type;
-      clickedTile = blankTile;
-      blankTile = tempTile;
-      // clickedType = blankType;
 
-      // console.log(tempType);
+      let tempTile = clickedTile;
+      clickedTile = this.state.tiles[blankTile].location;
+      let newBlankTile = tempTile;
+
+      console.log({clickedTile});
       console.log({tempTile});
-      console.log({newTile});
-      // console.log(oldBlankType);
-      // console.log(clickedType);
+      console.log({newBlankTile});
+      
+      let tempType = clickedType;
+      clickedType = blankType;
+      let newBlankType = tempType;
+  
+      console.log({clickedType});
+      console.log({tempType});
+      console.log({newBlankType});
+     
       
     }
   }
