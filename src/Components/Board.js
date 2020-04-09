@@ -14,7 +14,7 @@ class Board extends React.Component {
   async componentDidMount() {
     await this.setUpTiles();
     console.log(this.state.tiles);
-    
+
   }
 
   setUpTiles() {
@@ -24,63 +24,65 @@ class Board extends React.Component {
       let tileObject = {
         id: i,
         location: i,
-        winLocation: '',
+        winLocation: i,
         type: 'regular'
       }
       tileArray.push(tileObject);
-
     };
-    let blankType = tileArray[1].type
-    blankType = 'blank';
-    console.log(blankType);
-
     this.setState({ tiles: tileArray });
-
+  }
+  findEligibleTile() {
+    //  finding the current position (row/col) of clicked & blank:
+    // let N = this.clickedLocation
+    // var clickedCol = N % 4
+    // var clickedRow = parseInt(N/4)
+    // let blankN = this.state.tiles[1].location
+    // var blankCol = blankN % 4
+    // var blankRow = parseInt(blankN/4)
+    // if row of blank tile === clicked tile && col diff +/- 1
+    // if col of blank tile === clicked tile && row diff +/- 1
   }
 
-
-  handleClick(e) {
-    // console.log('clicked', e.target)
-    let clickedTile = this.state.tiles[e.target.id].location;
-    let clickedType = this.state.tiles[e.target.id].type;
-    let blankTile = this.state.tiles[1].location;
-    let blankType = this.state.tiles[1].type;
+  swapValues(id) {
+    console.log('clicked', id)
+    let clickedLocation = this.state.tiles[id].location;
+    let clickedType = this.state.tiles[id].type;
+    let blankLocation = this.state.tiles[0].location;
+    let blankType = this.state.tiles[0].type;
     blankType = 'blank';
 
-    // evaluate if clickedTile is eligible to swap with blankTile
-    let eligibleTile = (blankTile + 1) || (blankTile - 1)
-    if (clickedTile === eligibleTile) {
+    // // evaluate if clickedLocation is eligible to swap with blankLocation
+    let eligibleTile = (blankLocation + 2)
+    if (clickedLocation === eligibleTile) {
       console.log('switch');
 
-      let tempTile = clickedTile;
-      clickedTile = this.state.tiles[blankTile].location;
-      let newBlankTile = tempTile;
+      let tempTile = clickedLocation;
+      clickedLocation = this.state.tiles[0].location;
+      let newBlankLocation = tempTile;
 
-      console.log({clickedTile});
-      console.log({tempTile});
-      console.log({newBlankTile});
+      let tempArray = this.state.tiles;
+      tempArray[id].location = clickedLocation;
+      tempArray[blankLocation] = newBlankLocation;
       
+      console.log({ clickedLocation });
+      console.log({ tempTile });
+      console.log({ newBlankLocation });
+
       let tempType = clickedType;
       clickedType = blankType;
       let newBlankType = tempType;
-  
-      console.log({clickedType});
-      console.log({tempType});
-      console.log({newBlankType});
-     
-      
+
+      tempArray[id].type = clickedType;
+      tempArray[blankType] = newBlankType;
+      this.setState({ tiles: tempArray });
+
+      console.log({ clickedType });
+      console.log({ tempType });
+      console.log({ newBlankType });
+
     }
   }
 
-
-
-  // this.swapValues()
-  swapValues(handleClick) {
-    // take info and change it
-    // console.log(this.state.tiles[this.props]);
-
-  }
-  // 
 
   // componentDidUpdate-->check for win after tile moves (map over current array, check if == win array)
 
@@ -93,7 +95,7 @@ class Board extends React.Component {
     return (
 
       <Tiles tiles={this.state.tiles}
-        handleClick={this.handleClick.bind(this)}
+        swapValues={this.swapValues.bind(this)}
 
       />
 
