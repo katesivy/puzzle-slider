@@ -30,33 +30,54 @@ class Board extends React.Component {
       tileArray.push(tileObject);
 
     };
-    tileArray[0].type = 'blank';
+    // let blankType = tileArray[0].type
+    // blankType = 'blank';
+    // console.log(blankType);
+
     this.setState({ tiles: tileArray });
-    console.log(tileArray[0].type);
+
   }
 
 
   handleClick(e) {
-    console.log('clicked', e.target)
-    let currentClick = this.state.tiles[e.target.id].location;
-    console.log(currentClick);
-    const blankTile = this.state.tiles[0].location;
-    console.log(blankTile);
-    // evaluate if currentClick is eligible to swap with blankTile
+    // console.log('clicked', e.target)
+    let clickedTile = this.state.tiles[e.target.id].location;
+    // let clickedType = this.state.tiles[e.target.id].type;
+    // let blankType = 'blank';
+    let blankTile = this.state.tiles[1].location;
+    // console.log(clickedTile);
+    // console.log(clickedType);
+    // console.log(newType);
+    // console.log(blankTile);
+
+    // evaluate if clickedTile is eligible to swap with blankTile
     let eligibleTile = (blankTile + 1) || (blankTile - 1)
-    if (currentClick === eligibleTile) {
+    if (clickedTile === eligibleTile) {
       console.log('switch');
-      this.swapValues()
+      let tempTile = this.state.tiles[clickedTile].location;
+      // let tempType = this.state.tiles[clickedTile].type;
+      let newTile = this.state.tiles[blankTile].location;
+      // let oldBlankType = this.state.tiles[blankTile].type;
+      clickedTile = blankTile;
+      blankTile = tempTile;
+      // clickedType = blankType;
+
+      // console.log(tempType);
+      console.log({tempTile});
+      console.log({newTile});
+      // console.log(oldBlankType);
+      // console.log(clickedType);
+      
     }
   }
-  // swapValues-->check if secondClick is eligible to swap with firstClick; if so, set up temp position to store firstClick's data; swap location & isEmpty;
 
 
+
+  // this.swapValues()
   swapValues(handleClick) {
     // take info and change it
-    console.log(this.state.tiles[this.currentClick]);
-    // let nextTile = this.state.tiles[?];
-    // console.log(nextTile);
+    // console.log(this.state.tiles[this.props]);
+
   }
   // 
 
