@@ -14,7 +14,6 @@ class Board extends React.Component {
   async componentDidMount() {
     await this.setUpTiles();
     console.log(this.state.tiles);
-
   }
 
   setUpTiles() {
@@ -31,55 +30,52 @@ class Board extends React.Component {
     };
     this.setState({ tiles: tileArray });
   }
-  findEligibleTile() {
-    //  finding the current position (row/col) of clicked & blank:
-    // let N = this.clickedLocation
-    // var clickedCol = N % 4
-    // var clickedRow = parseInt(N/4)
-    // let blankN = this.state.tiles[1].location
-    // var blankCol = blankN % 4
-    // var blankRow = parseInt(blankN/4)
-    // if row of blank tile === clicked tile && col diff +/- 1
-    // if col of blank tile === clicked tile && row diff +/- 1
-  }
-
+  
   swapValues(id) {
     console.log('clicked', id)
-    let clickedLocation = this.state.tiles[id].location;
+    // let blankObject = this.state.tiles.find(item, index);
+    //   if (item === index[0]) {
+    // console.log(item);
+    //   }
+    let currentClicked = this.state.tiles[id].location;
     let clickedType = this.state.tiles[id].type;
     let blankLocation = this.state.tiles[0].location;
     let blankType = this.state.tiles[0].type;
     blankType = 'blank';
+    var clickedCol = currentClicked % 4;
+    var clickedRow = parseInt(currentClicked / 4);
+    var blankCol = blankLocation % 4;
+    var blankRow = parseInt(blankLocation / 4);
+    var switchTiles = false;
 
-    // // evaluate if clickedLocation is eligible to swap with blankLocation
-    let eligibleTile = (blankLocation + 2)
-    if (clickedLocation === eligibleTile) {
-      console.log('switch');
+    // // evaluate if currentClicked is eligible to swap with blankLocation
+    if ((blankRow === clickedRow) && (Math.abs(clickedCol - blankCol) === 1)) {
+      switchTiles = true;
+    } else if
+      ((blankCol === clickedCol) && (Math.abs(clickedCol - blankCol) === 1)) {
+      switchTiles = true;
+    }
+    if (switchTiles) {
+      console.log('switch')
 
-      let tempTile = clickedLocation;
-      clickedLocation = this.state.tiles[0].location;
+      let tempTile = currentClicked;
+      currentClicked = this.state.tiles[0].location;
       let newBlankLocation = tempTile;
-
-      let tempArray = this.state.tiles;
-      tempArray[id].location = clickedLocation;
-      tempArray[blankLocation] = newBlankLocation;
-      
-      console.log({ clickedLocation });
-      console.log({ tempTile });
-      console.log({ newBlankLocation });
-
       let tempType = clickedType;
       clickedType = blankType;
       let newBlankType = tempType;
 
+      let tempArray = this.state.tiles;
+      tempArray[id].location = currentClicked;
+      tempArray[blankLocation] = newBlankLocation;
       tempArray[id].type = clickedType;
       tempArray[blankType] = newBlankType;
+
       this.setState({ tiles: tempArray });
 
-      console.log({ clickedType });
-      console.log({ tempType });
-      console.log({ newBlankType });
-
+      console.log({ currentClicked });
+      console.log({ tempTile });
+      console.log({ newBlankLocation })
     }
   }
 
@@ -88,7 +84,6 @@ class Board extends React.Component {
 
   // scrambleTiles-->start in win position; check if tiles are eligible to swap; if so, swapValues
 
-  //  console.log({this.state.tiles});
 
   render() {
 
