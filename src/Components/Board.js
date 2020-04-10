@@ -1,5 +1,6 @@
 import React from 'react';
 import Tiles from './Tiles';
+import Buttons from './Buttons';
 
 
 class Board extends React.Component {
@@ -8,7 +9,7 @@ class Board extends React.Component {
     this.state = {
       tiles: []
     }
-    this.swapValues = this.swapValues.bind(this);
+    // this.findBlankObject = this.findBlankObject.bind(this);
   }
 
   async componentDidMount() {
@@ -27,22 +28,39 @@ class Board extends React.Component {
         type: 'regular'
       }
       tileArray.push(tileObject);
+      tileArray[0].type = 'blank';
     };
     this.setState({ tiles: tileArray });
   }
 
+  // findBlankObject(id, tiles) {
+  //       let blankObject = 0;
+  //       for (let i = 0; i < tiles.length; i++) {
+  //           if (tiles[i].location === id) {
+  //               blankObject = i;
+  //               break;
+  //           }
+  //       }
+  //       return blankObject;
+  //   } 
+
   swapValues(id) {
+
     console.log('clicked', id)
     let tempArray = this.state.tiles;
-    // let blankObject = this.state.tiles.find(i => i.id === 0);
-    // blankObject.className = 'blank';
+    // let blankObject = this.state.tiles.find(i => i.location === 0);
+    //    blankObject.type = 'blank';
+    //      console.log(blankObject);
     let blankIndex = this.state.tiles.findIndex(i => i.location === 0);
-    let currentClicked = id;
+    //  let blankIndex = this.findBlankObject();
+    // let blankIndex = blankObject[id]
+    // console.log(blankIndex); 
+    // let currentClicked = id;
 
-    var clickedCol = currentClicked % 4;
-    var clickedRow = parseInt(currentClicked / 4);
-    var blankCol = blankIndex % 4;
-    var blankRow = parseInt(blankIndex / 4);
+    var clickedCol = (id % 4);
+    var clickedRow = (parseInt(id / 4));
+    var blankCol = (blankIndex % 4);
+    var blankRow = (parseInt(blankIndex / 4));
     var switchTiles = false;
 
     if ((blankRow === clickedRow) && (Math.abs(clickedCol - blankCol)) === 1) {
@@ -53,34 +71,56 @@ class Board extends React.Component {
     } else {
       switchTiles = false;
     }
-
     if (switchTiles) {
       console.log('switch')
-      
-      let tempTile = tempArray[id].location;
+      let tempLocation = tempArray[id].location;
+      // console.log({ tempLocation })
+      let tempType = tempArray[id].type;
       tempArray[id].location = tempArray[blankIndex].location;
-      tempArray[blankIndex].location = tempTile;
-     
-       this.setState({ tiles: tempArray });
+      tempArray[id].type = tempArray[blankIndex].type;
+      //  console.log(tempArray[id].location)
+      tempArray[blankIndex].location = tempLocation;
+      tempArray[blankIndex].type = tempType;
+      //  console.log(tempArray[blankIndex].location)
+      //  console.log({tempArray})  
 
-      }
+      this.setState({ tiles: tempArray });
+
+    }
+    console.log(this.state.tiles)
   }
 
+  // -->check for win after tile moves (map over current array, check if == win array)
+  // componentDidUpdate() {
+  // for (i = 0; i < this.state.tiles.length; i++) {
+  //   if (this.state.tiles.winPosition === this.state.tiles.i) {
+  //       alert("you won")
+  //   }
+  // }
+  // }
 
-  // componentDidUpdate-->check for win after tile moves (map over current array, check if == win array)
+  // scrambleTiles-->start in win position; check if tiles are eligible to swap; if so, swapValues random $ of available spots: i-- (decrease each time) switch current position with type, define regular & type
+  scrambleTiles() {
 
-  // scrambleTiles-->start in win position; check if tiles are eligible to swap; if so, swapValues
 
+  }
+ 
+  resetTiles() {
+  }
 
   render() {
 
     return (
-
-      <Tiles tiles={this.state.tiles}
-        swapValues={this.swapValues.bind(this)}
-
-      />
-
+      <>
+        <Buttons scrambleTiles={this.scrambleTiles.bind(this)}
+                  resetTiles={this.resetTiles.bind(this)}
+        />
+        <Tiles tiles={this.state.tiles}
+          swapValues={this.swapValues.bind(this)}
+          />
+          
+        
+      </>
     );
   }
 }

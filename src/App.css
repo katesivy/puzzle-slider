@@ -15,6 +15,31 @@
   /* color: white; */
 }
 
-.col-3#0{
+.blank{
   background-color: green;
 }
+
+
+
+/* let tempTile = tempArray[id].location;
+        console.log({tempTile})
+      tempArray[id].location = tempArray[blankIndex].location;
+        console.log(tempArray[id].location)
+      tempArray[blankIndex].location = tempTile;
+        console.log(tempArray[blankIndex].location)
+      }
+      this.setState({ tiles: tempArray });
+       console.log(this.state.tiles)
+  } */
+
+
+  /* //   findBlankObject(id, tiles) {
+    //     let blankObject = 0;
+    //     for (let i = 0; i < this.state.tiles.length; i++) {
+    //         if (tiles[i].location === this.state.tiles.location) {
+    //             blankObject = i;
+    //             break;
+    //         }
+    //     }
+    //     return blankObject;
+    // } */
