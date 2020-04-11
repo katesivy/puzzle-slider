@@ -9,7 +9,7 @@ class Board extends React.Component {
     this.state = {
       tiles: []
     }
-    // this.findBlankObject = this.findBlankObject.bind(this);
+    this.checkWin = this.checkWin.bind(this);
   }
 
   async componentDidMount() {
@@ -33,30 +33,10 @@ class Board extends React.Component {
     this.setState({ tiles: tileArray });
   }
 
-  // findBlankObject(id, tiles) {
-  //       let blankObject = 0;
-  //       for (let i = 0; i < tiles.length; i++) {
-  //           if (tiles[i].location === id) {
-  //               blankObject = i;
-  //               break;
-  //           }
-  //       }
-  //       return blankObject;
-  //   } 
-
   swapValues(id) {
-
-    console.log('clicked', id)
+    // console.log('clicked id:', id)
     let tempArray = this.state.tiles;
-    // let blankObject = this.state.tiles.find(i => i.location === 0);
-    //    blankObject.type = 'blank';
-    //      console.log(blankObject);
     let blankIndex = this.state.tiles.findIndex(i => i.location === 0);
-    //  let blankIndex = this.findBlankObject();
-    // let blankIndex = blankObject[id]
-    // console.log(blankIndex); 
-    // let currentClicked = id;
-
     var clickedCol = (id % 4);
     var clickedRow = (parseInt(id / 4));
     var blankCol = (blankIndex % 4);
@@ -72,57 +52,62 @@ class Board extends React.Component {
       switchTiles = false;
     }
     if (switchTiles) {
-      console.log('switch')
+      // console.log('switch')
+
       let tempLocation = tempArray[id].location;
-      // console.log({ tempLocation })
       let tempType = tempArray[id].type;
       tempArray[id].location = tempArray[blankIndex].location;
       tempArray[id].type = tempArray[blankIndex].type;
-      //  console.log(tempArray[id].location)
       tempArray[blankIndex].location = tempLocation;
       tempArray[blankIndex].type = tempType;
-      //  console.log(tempArray[blankIndex].location)
-      //  console.log({tempArray})  
 
       this.setState({ tiles: tempArray });
-
+      this.checkWin();
     }
-    console.log(this.state.tiles)
   }
 
-  // -->check for win after tile moves (map over current array, check if == win array)
-  // componentDidUpdate() {
-  // for (i = 0; i < this.state.tiles.length; i++) {
-  //   if (this.state.tiles.winPosition === this.state.tiles.i) {
-  //       alert("you won")
-  //   }
-  // }
-  // }
+checkWin() {
+    let newArray = [];
+    let winArray = [];
+    for (let i = 0; i < this.state.tiles.length; i++) {
+      newArray.push(this.state.tiles[i].location)
+      winArray.push(this.state.tiles[i].winLocation)
+    }
+      if (newArray.toString() === winArray.toString()) {
+        console.log('win')
+        alert("you won")
+      }
+  }
 
   // scrambleTiles-->start in win position; check if tiles are eligible to swap; if so, swapValues random $ of available spots: i-- (decrease each time) switch current position with type, define regular & type
   scrambleTiles() {
 
-
   }
- 
+
   resetTiles() {
+    this.setUpTiles();
   }
 
   render() {
-
     return (
       <>
         <Buttons scrambleTiles={this.scrambleTiles.bind(this)}
-                  resetTiles={this.resetTiles.bind(this)}
+          resetTiles={this.resetTiles.bind(this)}
         />
         <Tiles tiles={this.state.tiles}
           swapValues={this.swapValues.bind(this)}
-          />
-          
-        
+        />
+
+
       </>
     );
   }
 }
 
 export default Board;
+
+ // for (let j = 0; j < newArray.length; j++) {
+      //   for (let k = 0; k < winArray.length; k++) {
+      //     if (newArray[j] === winArray[k]) {
+         // }
+      // }
