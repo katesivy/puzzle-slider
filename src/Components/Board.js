@@ -33,8 +33,12 @@ class Board extends React.Component {
     this.setState({ tiles: tileArray });
   }
 
+  resetTiles() {
+    this.setUpTiles();
+  }
+
   swapValues(id) {
-    // console.log('clicked id:', id)
+    console.log('swap')
     let tempArray = this.state.tiles;
     let blankIndex = this.state.tiles.findIndex(i => i.location === 0);
     var clickedCol = (id % 4);
@@ -52,8 +56,6 @@ class Board extends React.Component {
       switchTiles = false;
     }
     if (switchTiles) {
-      // console.log('switch')
-
       let tempLocation = tempArray[id].location;
       let tempType = tempArray[id].type;
       tempArray[id].location = tempArray[blankIndex].location;
@@ -65,6 +67,43 @@ class Board extends React.Component {
       this.checkWin();
     }
   }
+  // 1.define variables--blankTile, nextTile, move options? (R, L, D, U)
+  // 2.check if tiles are eligible to swap; (nextTile)
+      //*if tile.id != 3, 7, 15 (blankTile + width
+  // 3.if so, swapValues random # of available spots -->?how to move?
+  // i-- (decrease each time) switch current position with type, define regular & type
+  scrambleTiles() {
+    this.setUpTiles();
+    let blankTile = this.state.tiles.findIndex(i => i.location === 0);
+    var col = (blankTile % 4);
+    console.log('col:', col);
+    var row = (parseInt(blankTile / 4)); 
+    console.log('row:', row);
+    var nextTile;
+    // eligible moves:
+    // let tileMoveR = blankTile + 1; /*if in same col */
+    // if (col != 3) {
+    //   col + 1
+    // } 
+    //  // let tileMoveL = blankTile - 1; /*if in same col */
+    // if (col != 0) {
+    //   col -1
+    // }
+    //  // let tileMoveU = blankTile + 4; /*if in same row */
+    // if (row != 3) {
+    //   row + 1
+    // }
+    // // let tileMoveD = blankTile - 4; /*if in same row */
+    // if (row != 0) {
+    //   row - 1
+    // }
+     
+    // for (let i = 0; i < this.state.tiles.length; i--) {
+    //   Math.random(tileMove1-4) * 10;
+     
+    // }
+ 
+   }
 
 checkWin() {
     let newArray = [];
@@ -75,17 +114,8 @@ checkWin() {
     }
       if (newArray.toString() === winArray.toString()) {
         console.log('win')
-        alert("you won")
+        alert("YOU WON!!!!!")
       }
-  }
-
-  // scrambleTiles-->start in win position; check if tiles are eligible to swap; if so, swapValues random $ of available spots: i-- (decrease each time) switch current position with type, define regular & type
-  scrambleTiles() {
-
-  }
-
-  resetTiles() {
-    this.setUpTiles();
   }
 
   render() {
