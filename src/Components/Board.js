@@ -114,7 +114,7 @@ checkWin() {
     }
       if (newArray.toString() === winArray.toString()) {
         console.log('win')
-        alert("YOU WON!!!!!")
+        alert("Puzzle Completed!")
       }
   }
 

@@ -8,9 +8,10 @@ class Tiles extends React.Component {
   
   render() {
     return (
-       <div className="row mt-lg-5 ml-lg-5 mr-lg-5" >
+      <div className="container bg-light p-3">
+       <div className="row mt-lg-5 ml-lg-5 mr-lg-5 border border-secondary " >
         {this.props.tiles.map((item, index) => {
-         let classString = "col-3 p-5 border border-dark " + item.type;
+         let classString = "col-3 p-5 border border-secondary " + item.type;
          return (<div 
          key={index} 
          className={classString} 
@@ -20,6 +21,7 @@ class Tiles extends React.Component {
          
          }
         )}
+      </div>
       </div> 
     )
   }

@@ -1,24 +1,33 @@
 .App {
   text-align: center;
-  /* color: white; */
+  /* color: black; */
 }
 
 
 .App {
-  /* background-color: #282c34; */
+   /* background-color:  #E6BEC0; */
+   background-color:  #A9C5C7;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  /* color: white; */
+  color: gray;
 }
 
 .blank{
-  background-color: green;
+  background-color: grey;
+  color: gray;
 }
 
+#reset {
+  /* background-color: #E6BEC0; */
+  background-color:#A9C5C7;
+  /* border-color: #E6BEC0; */
+  border-color: #A9C5C7
+
+}
 
 
 /* let tempTile = tempArray[id].location;
